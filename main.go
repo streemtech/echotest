@@ -23,7 +23,8 @@ type EchoTestContext struct {
 	FileResponseCounter               int
 	FormFileErrResponseCounter        int
 	FormFileMultiResponseCounter      int
-	FormParamsResponseCounter         int
+	FormParamsErrResponseCounter      int
+	FormParamsURLResponseCounter      int
 	FormValueResponseCounter          int
 	GetResponseCounter                int
 	HandlerResponseCounter            int
@@ -61,123 +62,237 @@ type EchoTestContext struct {
 	XMLPrettyResponseCounter          int
 	XMLResponseCounter                int
 
-	AttachmentFileRequestValues    []interface{}
-	AttachmentNameRequestValues    []interface{}
+	AttachmentFileRequestValues    []string
+	AttachmentNameRequestValues    []string
 	BindRequestValues              []interface{}
-	BlobBRequestValues             []interface{}
-	BlobCodeRequestValues          []interface{}
-	BlobContentRequestValues       []interface{}
-	CookieRequestValues            []interface{}
-	ErrorRequestValues             []interface{}
-	FileRequestValues              []interface{}
-	FormFileRequestValues          []interface{}
-	FormValueRequestValues         []interface{}
-	GetRequestValues               []interface{}
-	HTMLBlobBRequestValues         []interface{}
-	HTMLBlobCodeRequestValues      []interface{}
-	HTMLCodeRequestValues          []interface{}
-	HTMLHTMLRequestValues          []interface{}
-	InlineFileRequestValues        []interface{}
-	InlineNameRequestValues        []interface{}
-	JSONBlobBRequestValues         []interface{}
-	JSONBlobCodeRequestValues      []interface{}
+	BlobBRequestValues             [][]byte
+	BlobCodeRequestValues          []int
+	BlobContentRequestValues       []string
+	CookieRequestValues            []string
+	ErrorRequestValues             []error
+	FileRequestValues              []string
+	FormFileRequestValues          []string
+	FormValueRequestValues         []string
+	GetRequestValues               []string
+	HTMLBlobBRequestValues         [][]byte
+	HTMLBlobCodeRequestValues      []int
+	HTMLCodeRequestValues          []int
+	HTMLHTMLRequestValues          []string
+	InlineFileRequestValues        []string
+	InlineNameRequestValues        []string
+	JSONBlobBRequestValues         [][]byte
+	JSONBlobCodeRequestValues      []int
+	JSONCodeRequestValues          []int
 	JSONIRequestValues             []interface{}
-	JSONPBlobBRequestValues        []interface{}
-	JSONPBlobCallbackRequestValues []interface{}
-	JSONPBlobCodeRequestValues     []interface{}
-	JSONPCallbackRequestValues     []interface{}
-	JSONPCodeRequestValues         []interface{}
+	JSONPBlobBRequestValues        [][]byte
+	JSONPBlobCallbackRequestValues []string
+	JSONPBlobCodeRequestValues     []int
+	JSONPCallbackRequestValues     []string
+	JSONPCodeRequestValues         []int
 	JSONPIRequestValues            []interface{}
-	JSONPrettyCodeRequestValues    []interface{}
-	JSONPrettyIndentRequestValues  []interface{}
+	JSONPrettyCodeRequestValues    []int
+	JSONPrettyIndentRequestValues  []string
 	JSONPrettyIRequestValues       []interface{}
-	NoContentRequestValues         []interface{}
-	ParamRequestValues             []interface{}
-	QueryParamRequestValues        []interface{}
-	RedirectCodeRequestValues      []interface{}
-	RedirectURLRequestValues       []interface{}
-	RenderCodeRequestValues        []interface{}
-	RenderdataRequestValues        []interface{}
-	RenderNameRequestValues        []interface{}
-	ResetRRequestValues            []interface{}
-	ResetWRequestValues            []interface{}
-	SetCookieRequestValues         []interface{}
-	SetHandlerRequestValues        []interface{}
-	SetKeyRequestValues            []interface{}
-	SetLoggerRequestValues         []interface{}
-	SetParamNamesRequestValues     []interface{}
-	SetParamValuesRequestValues    []interface{}
-	SetPathRequestValues           []interface{}
-	SetRequestValues               []interface{}
-	SetResponseValues              []interface{}
+	NoContentRequestValues         []int
+	ParamRequestValues             []string
+	QueryParamRequestValues        []string
+	RedirectCodeRequestValues      []int
+	RedirectURLRequestValues       []string
+	RenderCodeRequestValues        []int
+	RenderDataRequestValues        []interface{}
+	RenderNameRequestValues        []string
+	ResetRRequestValues            []*http.Request
+	ResetWRequestValues            []http.ResponseWriter
+	SetCookieRequestValues         []*http.Cookie
+	SetHandlerRequestValues        []echo.HandlerFunc
+	SetKeyRequestValues            []string
+	SetLoggerRequestValues         []echo.Logger
+	SetParamNamesRequestValues     []string
+	SetParamValuesRequestValues    []string
+	SetPathRequestValues           []string
+	SetRequestValues               []*http.Request
+	SetResponseValues              []*echo.Response
 	SetValRequestValues            []interface{}
-	StreamCodeRequestValues        []interface{}
-	StreamContentRequestValues     []interface{}
-	StreamRRequestValues           []interface{}
-	StringCodeRequestValues        []interface{}
-	StringSRequestValues           []interface{}
+	StreamCodeRequestValues        []int
+	StreamContentRequestValues     []string
+	StreamRRequestValues           []io.Reader
+	StringCodeRequestValues        []int
+	StringSRequestValues           []string
 	ValidateRequestValues          []interface{}
-	XMLBlobBRequestValues          []interface{}
-	XMLBlobCodeRequestValues       []interface{}
-	XMLCodeRequestValues           []interface{}
+	XMLBlobBRequestValues          [][]byte
+	XMLBlobCodeRequestValues       []int
+	XMLCodeRequestValues           []int
 	XMLIRequestValues              []interface{}
-	XMLPrettyCodeRequestValues     []interface{}
-	XMLPrettyIndentRequestValues   []interface{}
+	XMLPrettyCodeRequestValues     []int
+	XMLPrettyIndentRequestValues   []string
 	XMLPrettyIRequestValues        []interface{}
 
-	AttachmentResponse         []interface{}
-	BindResponse               []interface{}
-	BlobResponse               []interface{}
-	CookieErrResponse          []interface{}
-	CookieMultiResponse        []interface{}
-	CookiesResponse            []interface{}
-	EchoResponse               []interface{}
-	FileResponse               []interface{}
-	FormFileErrResponse        []interface{}
-	FormFileMultiResponse      []interface{}
-	FormParamsResponse         []interface{}
-	FormValueResponse          []interface{}
+	AttachmentResponse         []error
+	BindResponse               []error
+	BlobResponse               []error
+	CookieErrResponse          []error
+	CookieMultiResponse        []*http.Cookie
+	CookiesResponse            [][]*http.Cookie
+	EchoResponse               []*echo.Echo
+	FileResponse               []error
+	FormFileErrResponse        []error
+	FormFileMultiResponse      []*multipart.FileHeader
+	FormParamsErrResponse      []error
+	FormParamsURLResponse      []url.Values
+	FormValueResponse          []string
 	GetResponse                []interface{}
-	HandlerResponse            []interface{}
-	HTMLBlobResponse           []interface{}
-	HTMLResponse               []interface{}
-	InlineResponse             []interface{}
-	IsTLSResponse              []interface{}
-	IsWebSocketResponse        []interface{}
-	JSONBlobResponse           []interface{}
-	JSONCodeRequestValues      []interface{}
-	JSONPBlobResponse          []interface{}
-	JSONPResponse              []interface{}
-	JSONPrettyResponse         []interface{}
-	JSONResponse               []interface{}
-	LoggerResponse             []interface{}
-	MultipartFormErrResponse   []interface{}
-	MultipartFormMultiResponse []interface{}
-	NoContentResponse          []interface{}
-	ParamNamesResponse         []interface{}
-	ParamResponse              []interface{}
-	ParamValuesResponse        []interface{}
-	PathResponse               []interface{}
-	QueryParamResponse         []interface{}
-	QueryParamsResponse        []interface{}
-	QueryStringResponse        []interface{}
-	RealIPResponse             []interface{}
-	RedirectResponse           []interface{}
-	RenderResponse             []interface{}
-	RequestResponse            []interface{}
-	ResponseResponse           []interface{}
-	SchemeResponse             []interface{}
-	StreamResponse             []interface{}
-	StringResponse             []interface{}
-	ValidateResponse           []interface{}
-	XMLBlobResponse            []interface{}
-	XMLPrettyResponse          []interface{}
-	XMLResponse                []interface{}
+	HandlerResponse            []echo.HandlerFunc
+	HTMLBlobResponse           []error
+	HTMLResponse               []error
+	InlineResponse             []error
+	IsTLSResponse              []bool
+	IsWebSocketResponse        []bool
+	JSONBlobResponse           []error
+	JSONPBlobResponse          []error
+	JSONPResponse              []error
+	JSONPrettyResponse         []error
+	JSONResponse               []error
+	LoggerResponse             []echo.Logger
+	MultipartFormErrResponse   []error
+	MultipartFormMultiResponse []*multipart.Form
+	NoContentResponse          []error
+	ParamNamesResponse         [][]string
+	ParamResponse              []string
+	ParamValuesResponse        [][]string
+	PathResponse               []string
+	QueryParamResponse         []string
+	QueryParamsResponse        []url.Values
+	QueryStringResponse        []string
+	RealIPResponse             []string
+	RedirectResponse           []error
+	RenderResponse             []error
+	RequestResponse            []*http.Request
+	ResponseResponse           []*echo.Response
+	SchemeResponse             []string
+	StreamResponse             []error
+	StringResponse             []error
+	ValidateResponse           []error
+	XMLBlobResponse            []error
+	XMLPrettyResponse          []error
+	XMLResponse                []error
 }
 
 func New(t *testing.T) *EchoTestContext {
 	return &EchoTestContext{
-		t: t,
+		t:                              t,
+		AttachmentFileRequestValues:    make([]string, 0),
+		AttachmentNameRequestValues:    make([]string, 0),
+		BindRequestValues:              make([]interface{}, 0),
+		BlobBRequestValues:             make([][]byte, 0),
+		BlobCodeRequestValues:          make([]int, 0),
+		BlobContentRequestValues:       make([]string, 0),
+		CookieRequestValues:            make([]string, 0),
+		ErrorRequestValues:             make([]error, 0),
+		FileRequestValues:              make([]string, 0),
+		FormFileRequestValues:          make([]string, 0),
+		FormValueRequestValues:         make([]string, 0),
+		GetRequestValues:               make([]string, 0),
+		HTMLBlobBRequestValues:         make([][]byte, 0),
+		HTMLBlobCodeRequestValues:      make([]int, 0),
+		HTMLCodeRequestValues:          make([]int, 0),
+		HTMLHTMLRequestValues:          make([]string, 0),
+		InlineFileRequestValues:        make([]string, 0),
+		InlineNameRequestValues:        make([]string, 0),
+		JSONBlobBRequestValues:         make([][]byte, 0),
+		JSONBlobCodeRequestValues:      make([]int, 0),
+		JSONCodeRequestValues:          make([]int, 0),
+		JSONIRequestValues:             make([]interface{}, 0),
+		JSONPBlobBRequestValues:        make([][]byte, 0),
+		JSONPBlobCallbackRequestValues: make([]string, 0),
+		JSONPBlobCodeRequestValues:     make([]int, 0),
+		JSONPCallbackRequestValues:     make([]string, 0),
+		JSONPCodeRequestValues:         make([]int, 0),
+		JSONPIRequestValues:            make([]interface{}, 0),
+		JSONPrettyCodeRequestValues:    make([]int, 0),
+		JSONPrettyIndentRequestValues:  make([]string, 0),
+		JSONPrettyIRequestValues:       make([]interface{}, 0),
+		NoContentRequestValues:         make([]int, 0),
+		ParamRequestValues:             make([]string, 0),
+		QueryParamRequestValues:        make([]string, 0),
+		RedirectCodeRequestValues:      make([]int, 0),
+		RedirectURLRequestValues:       make([]string, 0),
+		RenderCodeRequestValues:        make([]int, 0),
+		RenderDataRequestValues:        make([]interface{}, 0),
+		RenderNameRequestValues:        make([]string, 0),
+		ResetRRequestValues:            make([]*http.Request, 0),
+		ResetWRequestValues:            make([]http.ResponseWriter, 0),
+		SetCookieRequestValues:         make([]*http.Cookie, 0),
+		SetHandlerRequestValues:        make([]echo.HandlerFunc, 0),
+		SetKeyRequestValues:            make([]string, 0),
+		SetLoggerRequestValues:         make([]echo.Logger, 0),
+		SetParamNamesRequestValues:     make([]string, 0),
+		SetParamValuesRequestValues:    make([]string, 0),
+		SetPathRequestValues:           make([]string, 0),
+		SetRequestValues:               make([]*http.Request, 0),
+		SetResponseValues:              make([]*echo.Response, 0),
+		SetValRequestValues:            make([]interface{}, 0),
+		StreamCodeRequestValues:        make([]int, 0),
+		StreamContentRequestValues:     make([]string, 0),
+		StreamRRequestValues:           make([]io.Reader, 0),
+		StringCodeRequestValues:        make([]int, 0),
+		StringSRequestValues:           make([]string, 0),
+		ValidateRequestValues:          make([]interface{}, 0),
+		XMLBlobBRequestValues:          make([][]byte, 0),
+		XMLBlobCodeRequestValues:       make([]int, 0),
+		XMLCodeRequestValues:           make([]int, 0),
+		XMLIRequestValues:              make([]interface{}, 0),
+		XMLPrettyCodeRequestValues:     make([]int, 0),
+		XMLPrettyIndentRequestValues:   make([]string, 0),
+		XMLPrettyIRequestValues:        make([]interface{}, 0),
+
+		AttachmentResponse:         make([]error, 0),
+		BindResponse:               make([]error, 0),
+		BlobResponse:               make([]error, 0),
+		CookieErrResponse:          make([]error, 0),
+		CookieMultiResponse:        make([]*http.Cookie, 0),
+		CookiesResponse:            make([][]*http.Cookie, 0),
+		EchoResponse:               make([]*echo.Echo, 0),
+		FileResponse:               make([]error, 0),
+		FormFileErrResponse:        make([]error, 0),
+		FormFileMultiResponse:      make([]*multipart.FileHeader, 0),
+		FormParamsErrResponse:      make([]error, 0),
+		FormParamsURLResponse:      make([]url.Values, 0),
+		FormValueResponse:          make([]string, 0),
+		GetResponse:                make([]interface{}, 0),
+		HandlerResponse:            make([]echo.HandlerFunc, 0),
+		HTMLBlobResponse:           make([]error, 0),
+		HTMLResponse:               make([]error, 0),
+		InlineResponse:             make([]error, 0),
+		IsTLSResponse:              make([]bool, 0),
+		IsWebSocketResponse:        make([]bool, 0),
+		JSONBlobResponse:           make([]error, 0),
+		JSONPBlobResponse:          make([]error, 0),
+		JSONPResponse:              make([]error, 0),
+		JSONPrettyResponse:         make([]error, 0),
+		JSONResponse:               make([]error, 0),
+		LoggerResponse:             make([]echo.Logger, 0),
+		MultipartFormErrResponse:   make([]error, 0),
+		MultipartFormMultiResponse: make([]*multipart.Form, 0),
+		NoContentResponse:          make([]error, 0),
+		ParamNamesResponse:         make([][]string, 0),
+		ParamResponse:              make([]string, 0),
+		ParamValuesResponse:        make([][]string, 0),
+		PathResponse:               make([]string, 0),
+		QueryParamResponse:         make([]string, 0),
+		QueryParamsResponse:        make([]url.Values, 0),
+		QueryStringResponse:        make([]string, 0),
+		RealIPResponse:             make([]string, 0),
+		RedirectResponse:           make([]error, 0),
+		RenderResponse:             make([]error, 0),
+		RequestResponse:            make([]*http.Request, 0),
+		ResponseResponse:           make([]*echo.Response, 0),
+		SchemeResponse:             make([]string, 0),
+		StreamResponse:             make([]error, 0),
+		StringResponse:             make([]error, 0),
+		ValidateResponse:           make([]error, 0),
+		XMLBlobResponse:            make([]error, 0),
+		XMLPrettyResponse:          make([]error, 0),
+		XMLResponse:                make([]error, 0),
 	}
 }
 
@@ -250,7 +365,7 @@ func (e *EchoTestContext) SetPath(p string) {
 
 // Param returns path parameter by name.
 func (e *EchoTestContext) Param(name string) string {
-	e.ParamRequestValues = append(e.ParamRequestValues, path)
+	e.ParamRequestValues = append(e.ParamRequestValues, name)
 
 	v := e.ParamResponse[e.ParamResponseCounter]
 	e.ParamResponseCounter++
@@ -281,7 +396,7 @@ func (e *EchoTestContext) ParamValues() []string {
 
 // SetParamValues sets path parameter values.
 func (e *EchoTestContext) SetParamValues(values ...string) {
-	for _, v := range names {
+	for _, v := range values {
 		e.SetParamValuesRequestValues = append(e.SetParamValuesRequestValues, v)
 	}
 
@@ -321,9 +436,11 @@ func (e *EchoTestContext) FormValue(name string) string {
 
 // FormParams returns the form parameters as `url.Values`.
 func (e *EchoTestContext) FormParams() (url.Values, error) {
-	v := e.FormParamsResponse[e.FormParamsResponseCounter]
-	e.FormParamsResponseCounter++
-	return v
+	v := e.FormParamsURLResponse[e.FormParamsURLResponseCounter]
+	e.FormParamsURLResponseCounter++
+	err := e.FormParamsErrResponse[e.FormParamsErrResponseCounter]
+	e.FormParamsErrResponseCounter++
+	return v, err
 }
 
 // FormFile returns the multipart form file for the provided name.
@@ -411,7 +528,7 @@ func (e *EchoTestContext) Validate(i interface{}) error {
 func (e *EchoTestContext) Render(code int, name string, data interface{}) error {
 	e.RenderCodeRequestValues = append(e.RenderCodeRequestValues, code)
 	e.RenderNameRequestValues = append(e.RenderNameRequestValues, name)
-	e.RenderdataRequestValues = append(e.RenderdataRequestValues, data)
+	e.RenderDataRequestValues = append(e.RenderDataRequestValues, data)
 
 	v := e.RenderResponse[e.RenderResponseCounter]
 	e.RenderResponseCounter++
@@ -471,8 +588,8 @@ func (e *EchoTestContext) JSONPretty(code int, i interface{}, indent string) err
 
 // JSONBlob sends a JSON blob response with status code.
 func (e *EchoTestContext) JSONBlob(code int, b []byte) error {
-	e.JSONBlobCodeRequestValues = append(e.JSONBlobCodeRequestValues, b)
-	e.JSONBlobBRequestValues = append(e.JSONBlobBRequestValues, code)
+	e.JSONBlobCodeRequestValues = append(e.JSONBlobCodeRequestValues, code)
+	e.JSONBlobBRequestValues = append(e.JSONBlobBRequestValues, b)
 
 	v := e.JSONBlobResponse[e.JSONBlobResponseCounter]
 	e.JSONBlobResponseCounter++
@@ -548,7 +665,7 @@ func (e *EchoTestContext) Blob(code int, contentType string, b []byte) error {
 // Stream sends a streaming response with status code and content type.
 func (e *EchoTestContext) Stream(code int, contentType string, r io.Reader) error {
 	e.StreamCodeRequestValues = append(e.StreamCodeRequestValues, code)
-	e.StreamContentRequestValues = append(e.StreamContentRequestValues, content)
+	e.StreamContentRequestValues = append(e.StreamContentRequestValues, contentType)
 	e.StreamRRequestValues = append(e.StreamRRequestValues, r)
 
 	v := e.StreamResponse[e.StreamResponseCounter]
@@ -607,7 +724,7 @@ func (e *EchoTestContext) Redirect(code int, url string) error {
 
 // Error invokes the registered HTTP error handler. Generally used by middleware.
 func (e *EchoTestContext) Error(err error) {
-	e.ErrorRequestValues = append(e.ErrorRequestValues, r)
+	e.ErrorRequestValues = append(e.ErrorRequestValues, err)
 
 }
 
@@ -620,7 +737,7 @@ func (e *EchoTestContext) Handler() echo.HandlerFunc {
 
 // SetHandler sets the matched handler by router.
 func (e *EchoTestContext) SetHandler(h echo.HandlerFunc) {
-	e.SetHandlerRequestValues = append(e.SetHandlerRequestValues, r)
+	e.SetHandlerRequestValues = append(e.SetHandlerRequestValues, h)
 
 }
 
@@ -633,7 +750,7 @@ func (e *EchoTestContext) Logger() echo.Logger {
 
 // Set the logger
 func (e *EchoTestContext) SetLogger(l echo.Logger) {
-	e.SetLoggerRequestValues = append(e.SetLoggerRequestValues, r)
+	e.SetLoggerRequestValues = append(e.SetLoggerRequestValues, l)
 
 }
 
